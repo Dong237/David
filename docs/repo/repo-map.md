@@ -60,7 +60,8 @@ Purpose: all Markdown knowledge lives under `docs/`.
 | `next-env.d.ts` | Generated Next.js TypeScript declarations. |
 | `.env.example` | Documented environment variables. |
 | `.gitignore` | Keeps generated local output out of Git. |
-| `README.md` | Bilingual product and repo introduction. |
+| `README.md` | English product and repo introduction. |
+| `README.zh-CN.md` | Simplified Chinese product and repo introduction. |
 
 ## Ignored Local Output
 
