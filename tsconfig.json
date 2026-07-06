@@ -31,13 +31,17 @@
   "include": [
     "app/**/*.ts",
     "app/**/*.tsx",
+    "desktop/**/*.ts",
+    "desktop/**/*.tsx",
     "next-env.d.ts",
     "src/**/*.ts",
+    "vite.desktop.config.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     ".next",
+    "dist-desktop",
     "research",
     "references",
     "assets"

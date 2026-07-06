@@ -6,141 +6,149 @@
   <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
-David is an AI PM coworker for indie builders.
+David is a desktop-first product blueprint generator for AI indie builders.
 
-It turns messy ideas, market signals, and founder context into evidence-backed product judgment: the Bet, the riskiest assumption, the right decision, and the next PM action.
+It turns a fuzzy product Bet into a structured blueprint:
 
-> Current app status: this repo includes a working validation prototype. The page currently uses `IndiePM Clinic` / `AI PM Doctor` offer copy to test paid/manual diagnosis demand. That page is a market test, not the final David product experience or final naming decision.
+```text
+Bet -> IA -> Flow -> Low-fi Wireframe -> Scope -> Handoff
+```
 
-## Why David Exists
+The product is now in **David Mode B**. Older AI PM Doctor / diagnosis / evidence-validation files are legacy context only.
 
-AI coding tools made building fast. They did not make product judgment easy.
+## Current Product Truth
 
-Solo builders can now ship a prototype in hours, but still struggle with the decisions that determine whether building is worth it:
+The source of truth lives in:
 
-- Who exactly is this for?
-- Is the pain real, urgent, and repeated?
-- What evidence exists beyond compliments and vague interest?
-- Should this become a spec, a smoke test, an interview script, a pricing test, or a kill decision?
-- After launch, what did the market actually teach us?
+```text
+docs/david-mode-b/
+  david_mode_b_batch6_final_absorb_plan.md
+  david_mode_b_batch5_absorb_plan.md
+  david_mode_b_batch2_absorb_plan.md
+  david_mode_b_batch3_absorb_plan.md
+  david_mode_b_batch4_absorb_plan.md
+  david_mode_b_batch1_absorb_plan.md
+```
 
-David exists because indie builders do not need another way to generate more output. They need a senior product judgment loop before and after they build.
+Priority order:
 
-## Target Product Position
+1. Batch 6 final product definition
+2. Batch 5 implementation and critic plan
+3. Batch 2 technical architecture, data model, and AI pipeline
+4. Batch 3 scope and handoff
+5. Batch 4 visual and demo direction
+6. Batch 1 positioning, user, and market
 
-David is not a PRD generator, idea generator, roadmap tool, generic chatbot, or coding agent.
+If any legacy file conflicts with these Mode B documents, the Mode B documents win.
 
-The final product should sit around coding tools and improve the product context they receive. The current prototype only tests demand for this promise.
+## Product Positioning
 
-| Tool type | What it does | David's target role |
-|---|---|---|
-| Coding agents | Build from prompts/specs | Decides whether the Bet deserves build time |
-| PRD generators | Turn an assumed decision into a document | Blocks premature specs when evidence is weak |
-| Research tools | Collect or summarize signals | Connects evidence to risk, decision, and next action |
-| Generic chatbots | Answer broad questions | Maintains a PM workflow: Bet, evidence, decision, memory |
+David Mode B is not a chat-first AI PM, generic dashboard, PRD bot, whiteboard, no-code builder, UI generator, or coding agent.
 
-## Core Workflow
+It is the blueprint layer before AI coding tools.
+
+| User problem | David's job |
+|---|---|
+| "I have a product idea but do not know how to structure the first version." | Normalize the Bet and generate an IA / flow / wireframe structure. |
+| "I do not know what pages, states, and user paths the MVP needs." | Turn the Bet into a canvas of pages, flows, states, and node details. |
+| "AI coding tools drift because my prompt is vague." | Compile the blueprint into Markdown, JSON, and agent-specific handoff prompts. |
+| "I keep building too much." | Mark In MVP / Later / Excluded, no-gos, rabbit holes, dependencies, and acceptance criteria. |
+
+## Core Experience
+
+The core UI is **Blueprint Canvas**.
+
+Chat may exist as an input/helper, but it is not the main interface.
 
 ```mermaid
 flowchart LR
-  A["Messy input<br/>idea, link, metric, complaint, launch result"] --> B["Frame the Bet<br/>user, problem, solution, outcome"]
-  B --> C["Build Evidence Ledger<br/>source, claim, strength, recency"]
-  C --> D["Diagnose Risk<br/>value, usability, feasibility, viability"]
-  D --> E["Decide<br/>build / test / kill / narrow / wait / iterate"]
-  E --> F["Generate Next PM Action<br/>interview, smoke test, pricing test, scope, launch review"]
-  F --> G["Create Artifact<br/>memo, test plan, evidence-backed spec, coding-agent handoff"]
-  G --> H["Remember Outcome<br/>decision history, evidence, learning"]
-  H --> B
-
-  I["Coding tools<br/>Cursor, Claude Code, Lovable, Bolt, Trae"]:::external
-  G --> I
-
-  classDef external fill:#f3f4f6,stroke:#9ca3af,color:#111827;
+  A["Fuzzy Bet"] --> B["Bet Brief"]
+  B --> C["IA Nodes"]
+  C --> D["Flow Edges"]
+  D --> E["Low-fi Wireframes"]
+  E --> F["Scope Cut"]
+  F --> G["Handoff Package"]
+  G --> H["Cursor / Codex / Claude Code / Lovable / Bolt / v0"]
 ```
 
-## The Bet
+## MVP Walking Skeleton
 
-The Bet is David's core product object.
+Build only the smallest product loop:
 
-```text
-I believe user X has problem Y.
-Solution Z can create value and business outcome B.
-This is supported or disproven by evidence E.
-The riskiest assumption is A.
-The next action is N.
-```
+1. Bet Intake
+2. Blueprint Canvas
+3. Node Detail
+4. Low-fi Wireframe Preview
+5. Scope Cut / Scope Sheet
+6. Handoff Export
+7. Basic Blueprint Validator
 
-David should never jump from raw idea to build spec. It should first understand the Bet, inspect evidence, and decide the right PM move.
+Implementation order:
 
-Terminology:
+1. Contract first: TypeScript domain types, Zod schemas, mock `BlueprintDocument`
+2. Workspace shell: left sidebar, top bar, canvas, right inspector, optional bottom dock
+3. Blueprint Canvas: React Flow renderer, custom nodes/edges, layer toggles
+4. Node Detail: why exists, user task, CTA, inputs, outputs, states, scope, acceptance criteria
+5. Wireframe Preview: deterministic JSON block renderer, low-fi only
+6. Scope: In MVP / Later / Excluded, no-gos, rabbit holes, dependencies, AC coverage
+7. Handoff: Markdown, JSON, and agent-specific prompts
+8. Validator: completeness, flow validity, wireframe coverage, handoff sufficiency
 
-- Bet: the product judgment unit, including user, problem, solution guess, evidence, risk, and next action.
-- Evidence Ledger: the traceable record of sources, claims, strength, recency, and relationship to a Bet.
-- Human-in-the-loop: manual review or delivery remains available for high-stakes diagnosis while the product is still validating judgment quality.
+## Visual Direction
+
+Use **Quiet Blueprint**:
+
+- desktop-first
+- canvas-first
+- clean, minimal, precise
+- light-first
+- neutral canvas
+- semantic accents only
+- 2.5D only through stacked cards, subtle shadow, z-index, and selected-node lift
+
+Avoid flashy AI gradients, glassmorphism, dashboard KPI walls, true 3D, and high-fidelity design generation.
 
 ## Current Repository State
 
-This repository currently contains:
+This branch is mid-pivot cleanup.
 
-- product source of truth in `docs/specs/`
-- frontend and validation-page design direction in `docs/frontend/`
-- backend and architecture notes in `docs/backend/`
-- market and platform research in `docs/research/`
-- a working Next.js validation prototype in `app/`
-- shared diagnosis/domain logic in `src/lib/`
+Current truth:
 
-The prototype can currently:
+- `docs/david-mode-b/` defines the new Mode B product.
+- `docs/legacy-before-pivot/` archives old Mode A specs, research, and design notes.
+- The active app surface has been reduced to a Mode B pivot shell. Legacy Mode A runtime code was removed from the default web and desktop entry points.
+- The next implementation should rebuild from contracts and fixtures rather than refactor the old diagnosis components.
 
-- render a bilingual validation page
-- capture case intake
-- generate a rule-based diagnosis preview
-- show a report page for generated previews
-- capture leads
-- capture paid diagnosis intent
-- optionally return English Stripe payment links when configured
-- optionally send intake, diagnosis, lead, and paid-intent records to a webhook sink
+Useful infrastructure already exists:
 
-The prototype does not yet have durable storage, authentication, a real evidence-ingestion pipeline, or an LLM-backed PM reasoning engine. Reports and captured records use the current in-memory store and are lost when the process restarts.
+- Next.js App Router
+- TypeScript strict mode
+- Tauri desktop shell
+- Vite desktop entry
+- localStorage/Tauri service pattern
 
-## Product Maturity
+Missing for Mode B implementation:
 
-| Layer | Current state | Target state |
-|---|---|---|
-| Landing page | Working validation test | Not final UX |
-| Intake | Form-based case capture | Natural conversation plus structured context |
-| Diagnosis | Rule-based preview | Evidence-backed PM reasoning workflow |
-| Evidence | User-provided text only | Source-backed Evidence Ledger |
-| Storage | In-memory local store | Durable database and product memory |
-| Delivery | Manual paid diagnosis validation | AI PM coworker with human-in-the-loop where needed |
-| Handoff | Conceptual | Evidence-backed specs for coding agents |
-
-## Roadmap
-
-| Stage | Focus | Expected outcome |
-|---|---|---|
-| Now | Validation prototype, manual paid diagnosis test, rule-based preview | Learn whether founders want this judgment loop enough to pay or apply |
-| Next | Durable storage, real case review workflow, admin surface | Stop losing validation data and make manual delivery reliable |
-| Next next | Evidence Ledger, Bet-centered diagnosis workflow, risk and decision memory | Turn the prototype into the first real PM coworker workflow |
-| Later | Agentic market research, evidence-backed specs, coding-agent handoff | Make David a durable product system around builder execution tools |
+- Zod contracts
+- `BlueprintDocument` fixture
+- React Flow canvas
+- Zustand workspace store
+- deterministic wireframe renderer
+- scope sheet
+- handoff exporter
+- blueprint validator
 
 ## Repository Structure
 
 ```text
-app/                 Next.js pages, routes, and API endpoints
-src/                 Shared product/backend logic
-assets/              Tracked product and design assets
+app/                     Current Next.js Mode B pivot shell
+desktop/                 Vite desktop entry for Tauri
+src-tauri/               Tauri desktop shell
 docs/
-  specs/             Product source of truth
-  frontend/          Visual and UX direction
-  backend/           API, data, architecture, and agent notes
-  research/          Market findings and accepted evidence
-  repo/              Repo maps and operating notes
-README.md            English repo introduction
-README.zh-CN.md      Simplified Chinese repo introduction
-package.json         Scripts and dependencies
+  david-mode-b/          Current product truth
+  legacy-before-pivot/   Archived pre-pivot context
+assets/                  Legacy visual assets
 ```
-
-Detailed structure: [docs/repo/repo-map.md](docs/repo/repo-map.md)
 
 ## Development
 
@@ -148,20 +156,22 @@ Prerequisites:
 
 - Node.js 20+ recommended
 - npm 10+
+- Rust toolchain for Tauri desktop builds
 
 ```bash
 npm install
 npm run dev
 npm run typecheck
 npm run build
+npm run desktop:dev-ui
+npm run tauri:dev
 ```
 
-The local dev server defaults to [http://localhost:3000](http://localhost:3000).
-
-Environment variables are documented in [.env.example](.env.example).
+The local web dev server defaults to [http://localhost:3000](http://localhost:3000).
+The desktop dev UI defaults to [http://127.0.0.1:1420](http://127.0.0.1:1420).
 
 ## Working Rule
 
-Evidence comes before PRD.
+`BlueprintDocument` must become the source of truth.
 
-If a Bet is not build-ready, David should generate the next evidence test instead of a premature build spec.
+React Flow nodes/edges are only render projections. Handoff exports must compile from the blueprint snapshot, not from freeform LLM prose.

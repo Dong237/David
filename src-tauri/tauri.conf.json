@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "David",
+  "version": "0.1.0",
+  "identifier": "ai.david.desktop",
+  "build": {
+    "beforeDevCommand": "npm run desktop:dev-ui",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "npm run desktop:build-ui",
+    "frontendDist": "../dist-desktop"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "David",
+        "width": 1440,
+        "height": 920,
+        "minWidth": 1100,
+        "minHeight": 720,
+        "center": true,
+        "resizable": true,
+        "decorations": true,
+        "visible": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app"],
+    "category": "Productivity",
+    "shortDescription": "Product blueprint generator for AI indie builders",
+    "longDescription": "David is a desktop-first product blueprint generator that turns a fuzzy product Bet into IA, flow, low-fi wireframes, scope, and handoff for AI coding tools.",
+    "macOS": {
+      "minimumSystemVersion": "13.0"
+    }
+  }
+}

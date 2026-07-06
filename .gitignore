@@ -3,10 +3,13 @@ node_modules/
 .next-stale-*/
 out/
 dist/
+dist-desktop/
 .vercel/
 .playwright-mcp/
 .claude/
 scratch/
+src-tauri/target/
+src-tauri/gen/
 
 .env
 .env.*

@@ -6,141 +6,149 @@
   简体中文
 </p>
 
-David 是一个面向独立开发者的 AI PM 同事。
+David 是一个面向 AI 独立开发者的 desktop-first 产品蓝图生成器。
 
-它把混乱的想法、市场信号和创始人上下文，转化成有证据支撑的产品判断：当前 Bet 是什么，最大的风险假设是什么，应该做什么决策，以及下一步 PM 动作是什么。
+它把模糊的产品 Bet 转化成结构化蓝图：
 
-> 当前应用状态：这个仓库包含一个可运行的验证原型。当前页面使用 `IndiePM Clinic` / `AI PM Doctor` 作为测试用 offer 文案，用来验证付费/人工诊断需求；它不是最终 David 产品体验，也不是最终命名决定。
+```text
+Bet -> IA -> Flow -> Low-fi Wireframe -> Scope -> Handoff
+```
 
-## 为什么需要 David
+当前产品已经进入 **David Mode B**。旧的 AI PM Doctor / 产品诊断 / 证据验证文件只作为历史上下文保留。
 
-AI 编程工具让构建变快了，但没有让产品判断变容易。
+## 当前产品真源
 
-独立开发者现在可以在几个小时内做出原型，但仍然会卡在真正决定成败的产品问题上：
+当前事实来源在：
 
-- 这个产品到底给谁用？
-- 痛点是否真实、紧迫、反复出现？
-- 除了“听起来不错”之外，有没有行为证据？
-- 现在应该写规格、做烟雾测试、访谈、定价测试，还是直接停止？
-- 上线之后，市场到底反馈了什么？
+```text
+docs/david-mode-b/
+  david_mode_b_batch6_final_absorb_plan.md
+  david_mode_b_batch5_absorb_plan.md
+  david_mode_b_batch2_absorb_plan.md
+  david_mode_b_batch3_absorb_plan.md
+  david_mode_b_batch4_absorb_plan.md
+  david_mode_b_batch1_absorb_plan.md
+```
 
-David 存在的原因是：独立开发者不需要更多输出机器，他们需要在构建前后有一个高级产品判断循环。
+读取优先级：
 
-## 目标产品定位
+1. Batch 6 最终产品定义
+2. Batch 5 实施计划与 critic 计划
+3. Batch 2 技术架构、数据模型、AI pipeline
+4. Batch 3 scope 与 handoff
+5. Batch 4 视觉与 demo 方向
+6. Batch 1 定位、用户与市场
 
-David 不是 PRD 生成器、点子生成器、路线图工具、通用聊天机器人，也不是编程 Agent。
+如果旧文件与这些 Mode B 文档冲突，以 Mode B 文档为准。
 
-最终产品应该围绕编程工具工作，提升交给编程工具的产品上下文质量。当前原型只是在验证这个承诺是否有需求。
+## 产品定位
 
-| 工具类型 | 它做什么 | David 的目标角色 |
-|---|---|---|
-| 编程 Agent | 根据 prompt/spec 构建 | 判断这个 Bet 是否值得投入构建时间 |
-| PRD 生成器 | 把已假设成立的决策写成文档 | 在证据不足时阻止过早写规格 |
-| 研究工具 | 收集或总结信号 | 把证据连接到风险、决策和下一步动作 |
-| 通用聊天机器人 | 回答广泛问题 | 维护 PM 工作流：Bet、证据、决策、记忆 |
+David Mode B 不是 chat-first AI PM、通用 dashboard、PRD bot、whiteboard、no-code builder、UI generator 或 coding agent。
 
-## 核心工作流
+它是 AI coding 工具之前的 blueprint layer。
+
+| 用户问题 | David 的工作 |
+|---|---|
+| “我有产品想法，但不知道第一版该怎么组织。” | 标准化 Bet，并生成 IA / flow / wireframe 结构。 |
+| “我不知道 MVP 需要哪些页面、状态和用户路径。” | 把 Bet 变成页面、流程、状态和节点详情组成的 canvas。 |
+| “AI coding 工具总是跑偏，因为我的 prompt 太散。” | 把蓝图编译成 Markdown、JSON 和 agent-specific handoff prompts。 |
+| “我总是做太多。” | 标记 In MVP / Later / Excluded、no-gos、rabbit holes、dependencies 和 acceptance criteria。 |
+
+## 核心体验
+
+核心 UI 是 **Blueprint Canvas**。
+
+Chat 可以作为输入或辅助，但不能成为主界面。
 
 ```mermaid
 flowchart LR
-  A["混乱输入<br/>想法、链接、指标、抱怨、上线结果"] --> B["梳理 Bet<br/>用户、问题、方案、结果"]
-  B --> C["建立证据账本<br/>来源、主张、强度、时效"]
-  C --> D["诊断风险<br/>价值、可用性、可行性、商业可行性"]
-  D --> E["做出决策<br/>构建 / 测试 / 放弃 / 收窄 / 等待 / 迭代"]
-  E --> F["生成下一步 PM 动作<br/>访谈、烟雾测试、定价测试、范围定义、上线复盘"]
-  F --> G["生成产物<br/>备忘录、测试计划、有证据支撑的规格、编程 Agent 交接"]
-  G --> H["记住结果<br/>决策历史、证据、学习"]
-  H --> B
-
-  I["编程工具<br/>Cursor、Claude Code、Lovable、Bolt、Trae"]:::external
-  G --> I
-
-  classDef external fill:#f3f4f6,stroke:#9ca3af,color:#111827;
+  A["Fuzzy Bet"] --> B["Bet Brief"]
+  B --> C["IA Nodes"]
+  C --> D["Flow Edges"]
+  D --> E["Low-fi Wireframes"]
+  E --> F["Scope Cut"]
+  F --> G["Handoff Package"]
+  G --> H["Cursor / Codex / Claude Code / Lovable / Bolt / v0"]
 ```
 
-## Bet 是什么
+## MVP Walking Skeleton
 
-Bet 是 David 的核心产品对象。
+只构建最小产品闭环：
 
-```text
-我相信用户 X 有问题 Y。
-方案 Z 可以创造用户价值和业务结果 B。
-这被证据 E 支持或反驳。
-当前最大的风险假设是 A。
-下一步动作是 N。
-```
+1. Bet Intake
+2. Blueprint Canvas
+3. Node Detail
+4. Low-fi Wireframe Preview
+5. Scope Cut / Scope Sheet
+6. Handoff Export
+7. Basic Blueprint Validator
 
-David 不应该从原始想法直接跳到构建规格。它应该先理解 Bet、检查证据，并判断正确的 PM 动作。
+实现顺序：
 
-术语说明：
+1. Contract first：TypeScript domain types、Zod schemas、mock `BlueprintDocument`
+2. Workspace shell：左侧栏、顶部栏、canvas、右侧 inspector、可选 bottom dock
+3. Blueprint Canvas：React Flow renderer、custom nodes/edges、layer toggles
+4. Node Detail：why exists、user task、CTA、inputs、outputs、states、scope、acceptance criteria
+5. Wireframe Preview：确定性的 JSON block renderer，只做低保真
+6. Scope：In MVP / Later / Excluded、no-gos、rabbit holes、dependencies、AC coverage
+7. Handoff：Markdown、JSON、agent-specific prompts
+8. Validator：完整性、flow 合法性、wireframe 覆盖、handoff 充分性
 
-- Bet：产品判断单元，包含用户、问题、方案、证据、风险和下一步动作。
-- Evidence Ledger：证据账本，记录来源、主张、强度、时效和关联 Bet。
-- human-in-the-loop：关键诊断或交付阶段保留人工参与。
+## 视觉方向
+
+使用 **Quiet Blueprint**：
+
+- desktop-first
+- canvas-first
+- clean, minimal, precise
+- light-first
+- neutral canvas
+- semantic accents only
+- 2.5D 只通过 stacked cards、subtle shadow、z-index 和 selected-node lift 表达
+
+避免 AI 渐变、玻璃拟态、dashboard KPI wall、真 3D 和高保真 UI 生成。
 
 ## 当前仓库状态
 
-这个仓库目前包含：
+这个 branch 处于 pivot cleanup 阶段。
 
-- `docs/specs/` 中的产品事实和核心规格
-- `docs/frontend/` 中的前端与验证页设计方向
-- `docs/backend/` 中的后端和架构说明
-- `docs/research/` 中的市场和平台研究
-- `app/` 中的 Next.js 验证原型
-- `src/lib/` 中的共享诊断/领域逻辑
+当前事实：
 
-当前原型可以：
+- `docs/david-mode-b/` 定义新的 Mode B 产品。
+- `docs/legacy-before-pivot/` 归档旧 Mode A specs、research 和 design notes。
+- 当前活跃 app surface 已收缩成 Mode B pivot shell。旧 Mode A runtime code 已从默认 Web 与 desktop 入口移除。
+- 下一步实现应从 contracts 和 fixtures 重建，而不是继续重构旧诊断组件。
 
-- 渲染中英文双语验证页
-- 捕获案例 intake
-- 生成基于规则的诊断预览
-- 展示已生成预览的报告页
-- 捕获邮箱线索
-- 捕获付费诊断意向
-- 配置后可返回英文 Stripe 支付链接
-- 可选把 intake、诊断、线索和付费意向记录发送到 webhook
+已有可复用基础设施：
 
-当前原型还没有持久化存储、身份系统、真实证据摄取管线，也没有 LLM 驱动的 PM 推理引擎。报告和捕获记录仍然使用当前的内存存储，进程重启后会丢失。
+- Next.js App Router
+- TypeScript strict mode
+- Tauri desktop shell
+- Vite desktop entry
+- localStorage / Tauri service pattern
 
-## 产品成熟度
+Mode B 仍缺：
 
-| 层级 | 当前状态 | 目标状态 |
-|---|---|---|
-| 落地页 | 可运行的验证测试 | 不是最终 UX |
-| Intake | 表单式案例收集 | 自然对话 + 结构化上下文 |
-| 诊断 | 基于规则的预览 | 有证据支撑的 PM 推理工作流 |
-| 证据 | 仅用户输入文本 | 带来源的证据账本 |
-| 存储 | 本地内存存储 | 持久化数据库和产品记忆 |
-| 交付 | 人工付费诊断验证 | AI PM 同事，必要时保留人工参与 |
-| 交接 | 概念层 | 给编程 Agent 的证据化规格 |
-
-## 路线图
-
-| 阶段 | 重点 | 预期结果 |
-|---|---|---|
-| 现在 | 验证原型、人工付费诊断测试、基于规则的预览 | 判断创始人是否真的需要并愿意付费/申请这种产品判断循环 |
-| 下一步 | 持久化存储、真实案例 review 流程、诊断交付后台 | 不再丢失验证数据，让人工交付可靠 |
-| 再下一步 | 证据账本、以 Bet 为中心的诊断工作流、风险和决策记忆 | 把原型推进成第一个真正的 AI PM 同事工作流 |
-| 之后 | Agentic 市场研究、有证据支撑的规格生成、编程 Agent 交接 | 让 David 成为围绕构建工具的长期产品系统 |
+- Zod contracts
+- `BlueprintDocument` fixture
+- React Flow canvas
+- Zustand workspace store
+- deterministic wireframe renderer
+- scope sheet
+- handoff exporter
+- blueprint validator
 
 ## 仓库结构
 
 ```text
-app/                 Next.js 页面、路由和 API 入口
-src/                 共享产品/后端逻辑
-assets/              被追踪的产品和设计素材
+app/                     当前 Next.js Mode B pivot shell
+desktop/                 Tauri 使用的 Vite desktop entry
+src-tauri/               Tauri desktop shell
 docs/
-  specs/             产品事实和核心规格
-  frontend/          视觉与交互方向
-  backend/           API、数据、架构和 Agent 说明
-  research/          市场研究和已接受证据
-  repo/              仓库地图和协作说明
-README.md            英文仓库介绍
-README.zh-CN.md      简体中文仓库介绍
-package.json         脚本和依赖
+  david-mode-b/          当前产品真源
+  legacy-before-pivot/   pre-pivot 历史上下文
+assets/                  旧视觉资产
 ```
-
-详细结构见：[docs/repo/repo-map.md](docs/repo/repo-map.md)
 
 ## 开发
 
@@ -148,20 +156,22 @@ package.json         脚本和依赖
 
 - 推荐 Node.js 20+
 - npm 10+
+- Tauri desktop build 需要 Rust toolchain
 
 ```bash
 npm install
 npm run dev
 npm run typecheck
 npm run build
+npm run desktop:dev-ui
+npm run tauri:dev
 ```
 
-本地开发服务默认运行在 [http://localhost:3000](http://localhost:3000)。
-
-环境变量见 [.env.example](.env.example)。
+本地 Web dev server 默认运行在 [http://localhost:3000](http://localhost:3000)。
+Desktop dev UI 默认运行在 [http://127.0.0.1:1420](http://127.0.0.1:1420)。
 
 ## 工作原则
 
-证据先于 PRD。
+`BlueprintDocument` 必须成为 source of truth。
 
-如果一个 Bet 还没达到可构建状态，David 应该生成下一步证据测试，而不是过早生成构建规格。
+React Flow nodes/edges 只能是渲染投影。Handoff export 必须从 blueprint snapshot 编译出来，不能依赖 LLM 自由发挥。

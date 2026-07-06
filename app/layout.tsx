@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IndiePM Clinic",
-  description: "AI-assisted, human-reviewed PM diagnosis for indie builders before the next build sprint."
+  title: "David - Product Blueprint Generator",
+  description:
+    "A desktop-first product blueprint generator for AI indie builders: Bet, IA, flow, low-fi wireframe, scope, and handoff."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
