@@ -1,0 +1,85 @@
+.env.example
+  s_9b974f645f855b::t_3f9d8fab8b6f08 1-4
+.gitignore
+  s_d3ed10f3429a8e::t_41664581d26461 6,11-12
+app/layout.tsx
+  s_9b974f645f855b::t_d3ece59524bb2a 5-7
+desktop/index.html
+  s_d3ed10f3429a8e::t_4d4d4e92ce58cb 1-13
+docs/legacy-before-pivot/frontend/02_david_app_design_note.md
+  s_d3ed10f3429a8e::t_595d334e7790bb 1-152
+docs/legacy-before-pivot/research/tmp/ai_pm_doctor_evidence_sprint_2026-07-01.md
+  s_d3ed10f3429a8e::t_8622a6c094a910 1-169
+docs/legacy-before-pivot/research/tmp/ai_pm_doctor_evidence_sprint_appendix_2026-07-01.md
+  s_d3ed10f3429a8e::t_166c65e1c3d263 1-789
+docs/legacy-before-pivot/research/tmp/ai_pm_doctor_strategy_meeting_2026-06-27.md
+  s_9b974f645f855b::t_7ff5661aa3ffd7 1-379
+docs/legacy-before-pivot/specs/00_product_principles.md
+  s_d3ed10f3429a8e::t_4c247beb8bf4a0 7,30,43,119,131
+docs/legacy-before-pivot/specs/01_target_users.md
+  s_d3ed10f3429a8e::t_4d679c77695c95 23-24,31,35,57-58,67,70-71,123,141
+docs/legacy-before-pivot/specs/02_user_scenarios.md
+  s_d3ed10f3429a8e::t_444294d28b38aa 128-129,188,215,217,228,245,267,299,301,303
+docs/legacy-before-pivot/specs/03_pm_reasoning_protocol.md
+  s_3268fbb708d770::t_323f5333b4d027 7,48,60,73
+docs/legacy-before-pivot/specs/04_bet_model.md
+  s_d3ed10f3429a8e::t_8a073335f5119e 195
+docs/legacy-before-pivot/specs/06_decision_policy.md
+  s_d3ed10f3429a8e::t_a0cfccb8f558be 53
+docs/legacy-before-pivot/specs/07_agent_workflows.md
+  s_9b974f645f855b::t_7a125a312a8fdc 1-1059
+docs/legacy-before-pivot/specs/08_mvp_ux_spec.md
+  s_9b974f645f855b::t_d6e8277491fc50 1-772
+src-tauri/Cargo.toml
+  s_d3ed10f3429a8e::t_f55109059ada7f 1-18
+src-tauri/build.rs
+  s_d3ed10f3429a8e::t_b6d88aed1c3066 1-3
+src-tauri/icons/android/mipmap-anydpi-v26/ic_launcher.xml
+  s_d3ed10f3429a8e::t_3536b39574aa36 1-5
+src-tauri/icons/android/values/ic_launcher_background.xml
+  s_d3ed10f3429a8e::t_283dd565a8ba76 1-4
+src-tauri/src/lib.rs
+  s_d3ed10f3429a8e::t_5f7bccee198e5e 1-25
+src-tauri/src/main.rs
+  s_d3ed10f3429a8e::t_e78f1a849293cb 1-3
+src-tauri/tauri.conf.json
+  s_9b974f645f855b::t_d2ba71104182d5 1-27,29-37
+tsconfig.json
+  s_d3ed10f3429a8e::t_5ba46b8ab2304c 34-35,38,44
+vite.desktop.config.ts
+  s_d3ed10f3429a8e::t_9480d00eedba30 1-3,5-10,12-22,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "828f133f29e23ed350f3950300f2d00e5f352966",
+  "prompts": {},
+  "sessions": {
+    "s_3268fbb708d770": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f01c6-5cfb-77c0-8049-52c288600d61",
+        "model": "unknown"
+      },
+      "human_author": "Dong237 <youxiang.dong@outlook.com>"
+    },
+    "s_9b974f645f855b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eceed-38ae-7890-a19d-f981aa7ff1c4",
+        "model": "unknown"
+      },
+      "human_author": "Dong237 <youxiang.dong@outlook.com>"
+    },
+    "s_d3ed10f3429a8e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ecf22-b3f5-7b33-8509-942c17bb91fd",
+        "model": "unknown"
+      },
+      "human_author": "Dong237 <youxiang.dong@outlook.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
