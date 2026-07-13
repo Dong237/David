@@ -1,0 +1,347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://david.local/schemas/autonomy_case_library.schema.json",
+  "title": "David Mode B Autonomy Evaluation Case",
+  "description": "Schema for synthetic cases that evaluate one autonomy decision. A valid record is not user evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "title",
+    "category",
+    "tags",
+    "synthetic",
+    "evidence_class",
+    "provenance_note",
+    "context",
+    "user_message",
+    "current_state",
+    "proposed_decision",
+    "impact",
+    "uncertainty",
+    "reversibility",
+    "undo_available",
+    "undo_complete",
+    "undo_scope",
+    "undo_persistence",
+    "user_exclusive_knowledge",
+    "evidence_dependent_truth",
+    "evidence_strength",
+    "locked_constraint_conflict",
+    "downstream_rework",
+    "risk_flags",
+    "interaction_cost",
+    "fallback_quality",
+    "blocking",
+    "question_history",
+    "ideal_action",
+    "acceptable_actions",
+    "disallowed_actions",
+    "ideal_user_visible_response",
+    "rationale",
+    "required_response_elements",
+    "expected_state_effect",
+    "failure_modes"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^AUT-[0-9]{3,}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "label_rename",
+        "node_reorder",
+        "add_missing_state",
+        "new_top_level_navigation",
+        "move_core_module",
+        "remove_from_mvp",
+        "change_required_flow",
+        "introduce_authentication",
+        "add_payment",
+        "add_external_api",
+        "change_target_user",
+        "low_confidence_mental_model",
+        "evidence_conflict",
+        "duplicate_question",
+        "user_refuses_answer",
+        "locked_node",
+        "scope_cut_breaks_core_path",
+        "routine_metadata",
+        "user_owned_constraint",
+        "nonblocking_unknown",
+        "label_validation",
+        "privacy_boundary",
+        "downstream_rework",
+        "interaction_cost"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "synthetic": {
+      "const": true,
+      "description": "Hard marker: this record is an expert-designed evaluation case."
+    },
+    "evidence_class": {
+      "const": "synthetic_evaluation_case"
+    },
+    "provenance_note": {
+      "type": "string",
+      "minLength": 20
+    },
+    "context": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": true
+    },
+    "user_message": {
+      "type": "string"
+    },
+    "current_state": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": true
+    },
+    "proposed_decision": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": true
+    },
+    "impact": {
+      "$ref": "#/$defs/threeLevel"
+    },
+    "uncertainty": {
+      "$ref": "#/$defs/threeLevel"
+    },
+    "reversibility": {
+      "type": "string",
+      "enum": ["easy", "moderate", "hard"]
+    },
+    "undo_available": {
+      "type": "boolean"
+    },
+    "undo_complete": {
+      "type": "boolean"
+    },
+    "undo_scope": {
+      "type": "string",
+      "enum": ["none", "local_patch", "cascade_atomic"]
+    },
+    "undo_persistence": {
+      "type": "string",
+      "enum": ["not_applicable", "session", "versioned"]
+    },
+    "user_exclusive_knowledge": {
+      "type": "boolean"
+    },
+    "evidence_dependent_truth": {
+      "type": "boolean",
+      "description": "True only when a material decision requires user research, analytics, legal/security review, or technical validation rather than founder preference."
+    },
+    "evidence_strength": {
+      "type": "string",
+      "enum": ["none", "weak", "medium", "strong"]
+    },
+    "locked_constraint_conflict": {
+      "type": "boolean"
+    },
+    "downstream_rework": {
+      "$ref": "#/$defs/threeLevel"
+    },
+    "risk_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["security", "privacy", "legal"],
+      "properties": {
+        "security": {
+          "$ref": "#/$defs/riskLevel"
+        },
+        "privacy": {
+          "$ref": "#/$defs/riskLevel"
+        },
+        "legal": {
+          "$ref": "#/$defs/riskLevel"
+        }
+      }
+    },
+    "interaction_cost": {
+      "$ref": "#/$defs/threeLevel"
+    },
+    "fallback_quality": {
+      "type": "string",
+      "enum": ["none", "weak", "safe"]
+    },
+    "blocking": {
+      "type": "boolean"
+    },
+    "question_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fingerprint", "status"],
+        "properties": {
+          "fingerprint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": ["unasked", "asked", "answered", "declined"]
+          },
+          "answer": {},
+          "review_trigger": {
+            "type": "string"
+          },
+          "trigger_fired": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "ideal_action": {
+      "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/AutonomyDecision"
+    },
+    "acceptable_actions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/AutonomyDecision"
+      }
+    },
+    "disallowed_actions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/AutonomyDecision"
+      }
+    },
+    "ideal_user_visible_response": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 20
+    },
+    "required_response_elements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "change_summary",
+          "provenance",
+          "affected_ids",
+          "undo_control",
+          "structure_diff",
+          "impact_summary",
+          "evidence_and_assumptions",
+          "alternatives",
+          "approval_controls",
+          "single_question",
+          "why_question_matters",
+          "decision_changed",
+          "fallback",
+          "assumption_record",
+          "confidence",
+          "review_trigger",
+          "research_question",
+          "validation_method",
+          "decision_threshold",
+          "recovery_plan",
+          "constraint_conflict",
+          "state_unchanged_until_approval"
+        ]
+      }
+    },
+    "expected_state_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mutation", "description"],
+      "properties": {
+        "mutation": {
+          "type": "string",
+          "enum": [
+            "apply",
+            "apply_reversible",
+            "proposal_only",
+            "no_mutation_waiting_for_answer",
+            "create_assumption",
+            "create_research_task"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "failure_modes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "undo_complete": { "const": true } }, "required": ["undo_complete"] },
+      "then": {
+        "properties": {
+          "undo_available": { "const": true },
+          "undo_scope": { "enum": ["local_patch", "cascade_atomic"] },
+          "undo_persistence": { "enum": ["session", "versioned"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "undo_available": { "const": false } }, "required": ["undo_available"] },
+      "then": {
+        "properties": {
+          "undo_complete": { "const": false },
+          "undo_scope": { "const": "none" },
+          "undo_persistence": { "const": "not_applicable" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "ideal_action": { "const": "APPLY_WITH_UNDO" } }, "required": ["ideal_action"] },
+      "then": {
+        "properties": {
+          "undo_available": { "const": true },
+          "undo_complete": { "const": true },
+          "undo_scope": { "enum": ["local_patch", "cascade_atomic"] },
+          "undo_persistence": { "enum": ["session", "versioned"] }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "threeLevel": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "riskLevel": {
+      "type": "string",
+      "enum": ["none", "low", "medium", "high"]
+    }
+  }
+}

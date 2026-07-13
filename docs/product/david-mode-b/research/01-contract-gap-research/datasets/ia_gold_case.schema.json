@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://david.local/schemas/ia_gold_case.schema.json",
+  "title": "David Mode B IA Gold Case",
+  "description": "用于评测 IA 推理质量的案例结构。seed 必须标记为 synthetic evaluation case，不得作为真实用户证据。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "title",
+    "product_type",
+    "synthetic",
+    "evidence_status",
+    "raw_input",
+    "user_and_situation",
+    "core_job",
+    "information_needs",
+    "inventory",
+    "mental_model_hypotheses",
+    "candidate_ias",
+    "recommended_ia",
+    "labels_and_hierarchy",
+    "navigation_model",
+    "core_flows",
+    "node_mini_ias",
+    "mvp_scope",
+    "acceptance_criteria",
+    "handoff_expectations",
+    "assumptions",
+    "validation_plan",
+    "common_wrong_answers",
+    "evaluation_oracles",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "case_id": { "type": "string", "pattern": "^IA-GOLD-[0-9]{3}$" },
+    "title": { "type": "string", "minLength": 1 },
+    "product_type": {
+      "enum": [
+        "desktop_b2b_saas",
+        "mobile_consumer_app",
+        "ai_workflow_product",
+        "marketplace",
+        "content_learning_product",
+        "existing_product_redesign",
+        "feature_added_to_existing_repo"
+      ]
+    },
+    "synthetic": { "const": true },
+    "evidence_status": { "const": "synthetic_evaluation_case" },
+    "raw_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["message", "provided_artifacts", "explicit_constraints"],
+      "properties": {
+        "message": { "type": "string", "minLength": 1 },
+        "provided_artifacts": { "type": "array", "items": { "type": "string" } },
+        "explicit_constraints": { "type": "array", "items": { "$ref": "#/$defs/constraint" } }
+      }
+    },
+    "user_and_situation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_user", "situation", "trigger", "desired_progress", "platform"],
+      "properties": {
+        "target_user": { "type": "string", "minLength": 1 },
+        "situation": { "type": "string", "minLength": 1 },
+        "trigger": { "type": "string", "minLength": 1 },
+        "desired_progress": { "type": "string", "minLength": 1 },
+        "platform": { "type": "string", "minLength": 1 }
+      }
+    },
+    "core_job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["job_statement", "success_state", "failure_consequence"],
+      "properties": {
+        "job_statement": { "type": "string", "minLength": 1 },
+        "success_state": { "type": "string", "minLength": 1 },
+        "failure_consequence": { "type": "string", "minLength": 1 }
+      }
+    },
+    "information_needs": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["need_id", "need", "moment", "priority"],
+        "properties": {
+          "need_id": { "type": "string", "pattern": "^IN-[0-9]+$" },
+          "need": { "type": "string", "minLength": 1 },
+          "moment": { "type": "string", "minLength": 1 },
+          "priority": { "enum": ["critical", "important", "supporting"] }
+        }
+      }
+    },
+    "inventory": { "$ref": "#/$defs/inventory" },
+    "mental_model_hypotheses": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/mentalModelHypothesis" }
+    },
+    "candidate_ias": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/candidateIA" }
+    },
+    "recommended_ia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "selection_rationale", "tradeoffs", "what_would_change_it", "confidence", "realization_mapping"],
+      "properties": {
+        "candidate_id": { "type": "string", "pattern": "^CAND-[A-C]$" },
+        "selection_rationale": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "tradeoffs": { "type": "array", "items": { "type": "string" } },
+        "what_would_change_it": { "type": "array", "items": { "type": "string" } },
+        "confidence": { "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/Confidence" },
+        "realization_mapping": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/candidateRealization" }
+        }
+      }
+    },
+    "labels_and_hierarchy": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/iaNode" }
+    },
+    "navigation_model": { "$ref": "#/$defs/navigationModel" },
+    "core_flows": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/coreFlow" }
+    },
+    "node_mini_ias": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/nodeMiniIA" }
+    },
+    "mvp_scope": { "$ref": "#/$defs/mvpScope" },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/acceptanceCriterion" }
+    },
+    "handoff_expectations": { "$ref": "#/$defs/handoffExpectations" },
+    "assumptions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/assumption" }
+    },
+    "validation_plan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/validationItem" }
+    },
+    "common_wrong_answers": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/wrongAnswer" }
+    },
+    "evaluation_oracles": { "$ref": "#/$defs/evaluationOracles" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["created_at", "language", "authoring_method", "limitations"],
+      "properties": {
+        "created_at": { "type": "string", "format": "date" },
+        "language": { "const": "zh-CN" },
+        "authoring_method": { "const": "expert_designed_synthetic" },
+        "limitations": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "stringArray": { "type": "array", "items": { "type": "string" } },
+    "constraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constraint_id", "statement", "status", "owner", "target_refs", "prohibited_operations"],
+      "properties": {
+        "constraint_id": { "type": "string", "pattern": "^CON-[0-9]+$" },
+        "statement": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/LifecycleStatus" },
+        "owner": { "enum": ["user", "business_owner", "repo_owner", "legal_owner", "technical_owner"] },
+        "target_refs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "prohibited_operations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "candidateRealization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_group", "realized_node_ids", "navigation_placements", "refinement_rationale"],
+      "properties": {
+        "candidate_group": { "type": "string", "minLength": 1 },
+        "realized_node_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^NODE-[A-Z0-9-]+$" } },
+        "navigation_placements": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/navigationPlacement" } },
+        "refinement_rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "navigationPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["placement_id", "kind", "node_id", "projection_value"],
+      "properties": {
+        "placement_id": { "type": "string", "pattern": "^PLACE-[A-Z0-9-]+$" },
+        "kind": { "enum": ["global", "local", "contextual", "entry_point"] },
+        "node_id": { "type": "string", "pattern": "^NODE-[A-Z0-9-]+$" },
+        "projection_value": { "type": "string", "minLength": 1 }
+      }
+    },
+    "inventoryItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "criticality", "provenance", "confidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "criticality": { "enum": ["core", "supporting", "later"] },
+        "provenance": {
+          "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/ProvenanceCore"
+        },
+        "confidence": {
+          "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/Confidence"
+        }
+      }
+    },
+    "inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objects", "content", "capabilities", "actions", "states", "roles", "permissions", "dependencies", "rules", "events"],
+      "properties": {
+        "objects": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/inventoryItem" } },
+        "content": { "type": "array", "items": { "$ref": "#/$defs/inventoryItem" } },
+        "capabilities": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/inventoryItem" } },
+        "actions": { "$ref": "#/$defs/stringArray" },
+        "states": { "$ref": "#/$defs/stringArray" },
+        "roles": { "$ref": "#/$defs/stringArray" },
+        "permissions": { "$ref": "#/$defs/stringArray" },
+        "dependencies": { "$ref": "#/$defs/stringArray" },
+        "rules": { "$ref": "#/$defs/stringArray" },
+        "events": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "mentalModelHypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hypothesis_id", "name", "description", "supporting_cues", "expected_benefits", "risks", "confidence", "validation_method", "provenance"],
+      "properties": {
+        "hypothesis_id": { "type": "string", "pattern": "^MMH-[0-9]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "supporting_cues": { "$ref": "#/$defs/stringArray" },
+        "expected_benefits": { "$ref": "#/$defs/stringArray" },
+        "risks": { "$ref": "#/$defs/stringArray" },
+        "confidence": { "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/Confidence" },
+        "validation_method": { "type": "string", "minLength": 1 },
+        "provenance": {
+          "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/ProvenanceCore"
+        }
+      }
+    },
+    "candidateIA": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "scheme", "top_level_groups", "rationale", "tradeoffs", "flow_effect", "scope_effect"],
+      "properties": {
+        "candidate_id": { "type": "string", "pattern": "^CAND-[A-C]$" },
+        "scheme": { "enum": ["task_based", "object_based", "lifecycle_based", "frequency_based", "role_based", "topic_based", "goal_based", "hybrid"] },
+        "top_level_groups": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+        "rationale": { "type": "string", "minLength": 1 },
+        "tradeoffs": { "$ref": "#/$defs/stringArray" },
+        "flow_effect": { "type": "string", "minLength": 1 },
+        "scope_effect": { "type": "string", "minLength": 1 }
+      }
+    },
+    "iaNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "label", "parent_id", "node_type", "rationale", "scope_status"],
+      "properties": {
+        "node_id": { "type": "string", "pattern": "^NODE-[A-Z0-9-]+$" },
+        "label": { "type": "string", "minLength": 1 },
+        "parent_id": { "type": ["string", "null"] },
+        "node_type": { "enum": ["root", "space", "page", "panel", "modal", "contextual_action", "background_process"] },
+        "rationale": { "type": "string", "minLength": 1 },
+        "scope_status": { "enum": ["in_mvp", "later", "excluded", "test_first", "dependency_blocked"] }
+      }
+    },
+    "navigationModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["global", "local", "contextual", "search", "home", "entry_points", "orientation_cues", "rationale"],
+      "properties": {
+        "global": { "$ref": "#/$defs/stringArray" },
+        "local": { "$ref": "#/$defs/stringArray" },
+        "contextual": { "$ref": "#/$defs/stringArray" },
+        "search": { "type": "string" },
+        "home": { "type": "string" },
+        "entry_points": { "$ref": "#/$defs/stringArray" },
+        "orientation_cues": { "$ref": "#/$defs/stringArray" },
+        "rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "flowStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "node_id", "action", "result", "state"],
+      "properties": {
+        "step_id": { "type": "string", "pattern": "^STEP-[0-9]+$" },
+        "node_id": { "type": "string", "pattern": "^NODE-[A-Z0-9-]+$" },
+        "action": { "type": "string", "minLength": 1 },
+        "result": { "type": "string", "minLength": 1 },
+        "state": { "type": "string", "minLength": 1 }
+      }
+    },
+    "coreFlow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["flow_id", "name", "outcome", "path_types_covered", "steps", "recovery"],
+      "properties": {
+        "flow_id": { "type": "string", "pattern": "^FLOW-[A-Z0-9-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "outcome": { "type": "string", "minLength": 1 },
+        "path_types_covered": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["happy", "alternate", "error", "empty", "permission", "cancellation", "retry_recovery", "return_repeat"] },
+          "contains": { "const": "happy" }
+        },
+        "steps": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/flowStep" } },
+        "recovery": { "type": "string", "minLength": 1 }
+      }
+    },
+    "nodeMiniIA": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "purpose", "user_intent", "entry_context", "primary_information", "supporting_information", "primary_cta", "secondary_actions", "inputs", "outputs", "decision_points", "progressive_disclosure", "states", "next_states"],
+      "properties": {
+        "node_id": { "type": "string", "pattern": "^NODE-[A-Z0-9-]+$" },
+        "purpose": { "type": "string", "minLength": 1 },
+        "user_intent": { "type": "string", "minLength": 1 },
+        "entry_context": { "type": "string", "minLength": 1 },
+        "primary_information": { "$ref": "#/$defs/stringArray" },
+        "supporting_information": { "$ref": "#/$defs/stringArray" },
+        "primary_cta": { "type": "string", "minLength": 1 },
+        "secondary_actions": { "$ref": "#/$defs/stringArray" },
+        "inputs": { "$ref": "#/$defs/stringArray" },
+        "outputs": { "$ref": "#/$defs/stringArray" },
+        "decision_points": { "$ref": "#/$defs/stringArray" },
+        "progressive_disclosure": { "$ref": "#/$defs/stringArray" },
+        "states": { "$ref": "#/$defs/stringArray" },
+        "next_states": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "mvpScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coherent_outcome", "in_mvp", "later", "excluded", "test_first", "rabbit_holes", "dependency_blocked"],
+      "properties": {
+        "coherent_outcome": { "type": "string", "minLength": 1 },
+        "in_mvp": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "later": { "$ref": "#/$defs/stringArray" },
+        "excluded": { "$ref": "#/$defs/stringArray" },
+        "test_first": { "$ref": "#/$defs/stringArray" },
+        "rabbit_holes": { "$ref": "#/$defs/stringArray" },
+        "dependency_blocked": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "acceptanceCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ac_id", "target_ids", "precondition", "event", "observable_outcome", "verification"],
+      "properties": {
+        "ac_id": { "type": "string", "pattern": "^AC-[0-9]+$" },
+        "target_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "precondition": { "type": "string", "minLength": 1 },
+        "event": { "type": "string", "minLength": 1 },
+        "observable_outcome": { "type": "string", "minLength": 1 },
+        "verification": { "type": "string", "minLength": 1 }
+      }
+    },
+    "handoffExpectations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "canonical_refs", "file_refs", "constraints_to_preserve", "required_commands", "done_when", "expected_artifacts", "unresolved"],
+      "properties": {
+        "status": { "const": "not_ready" },
+        "canonical_refs": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "file_refs": { "type": "array", "items": { "type": "string" } },
+        "constraints_to_preserve": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "required_commands": { "type": "array", "items": { "type": "string" } },
+        "done_when": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "expected_artifacts": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "unresolved": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "assumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assumption_id", "statement", "category", "importance", "evidence_strength", "fallback_if_wrong", "validation_method", "provenance", "confidence"],
+      "properties": {
+        "assumption_id": { "type": "string", "pattern": "^ASM-[0-9]+$" },
+        "statement": { "type": "string", "minLength": 1 },
+        "category": { "enum": ["user", "need", "mental_model", "label", "navigation", "flow", "scope", "technical", "business"] },
+        "importance": { "enum": ["low", "medium", "high"] },
+        "evidence_strength": { "enum": ["none", "weak", "medium", "strong"] },
+        "fallback_if_wrong": { "type": "string", "minLength": 1 },
+        "validation_method": { "type": "string", "minLength": 1 },
+        "provenance": {
+          "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/ProvenanceCore"
+        },
+        "confidence": {
+          "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/Confidence"
+        }
+      }
+    },
+    "validationItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_id", "question", "method", "metrics", "decision_rule", "status"],
+      "properties": {
+        "validation_id": { "type": "string", "pattern": "^VAL-[0-9]+$" },
+        "question": { "type": "string", "minLength": 1 },
+        "method": { "enum": ["expert_review", "card_sort", "tree_test", "usability_test", "prototype_test", "analytics_review", "technical_spike", "downstream_agent_test", "business_review"] },
+        "metrics": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "decision_rule": { "type": "string", "minLength": 1 },
+        "status": { "const": "not_run" }
+      }
+    },
+    "wrongAnswer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pattern", "why_wrong", "detectable_signals", "severity"],
+      "properties": {
+        "pattern": { "type": "string", "minLength": 1 },
+        "why_wrong": { "type": "string", "minLength": 1 },
+        "detectable_signals": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "severity": { "$ref": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json#/$defs/Severity" }
+      }
+    },
+    "evaluationOracles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deterministic", "expert_rubric", "llm_judge", "human_test"],
+      "properties": {
+        "deterministic": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "expert_rubric": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "llm_judge": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "human_test": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    }
+  }
+}

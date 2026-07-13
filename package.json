@@ -2,29 +2,52 @@
   "name": "david",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24.0.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "desktop:dev-ui": "vite --config vite.desktop.config.ts",
-    "desktop:build-ui": "vite build --config vite.desktop.config.ts",
+    "dev": "vite --config vite.desktop.config.ts",
+    "build": "vite build --config vite.desktop.config.ts",
+    "preview": "vite preview --config vite.desktop.config.ts",
+    "start": "npm run preview",
+    "typecheck": "tsc -p tsconfig.desktop.json --noEmit",
+    "lint": "eslint desktop/src tests vite.desktop.config.ts vitest.config.ts playwright.config.ts eslint.config.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "desktop:dev-ui": "npm run dev",
+    "desktop:build-ui": "npm run build",
+    "legacy:next:dev": "next dev",
+    "legacy:next:build": "next build",
     "tauri:dev": "PATH=/Users/bytedance/.cargo/bin:$PATH tauri dev",
-    "tauri:build": "PATH=/Users/bytedance/.cargo/bin:$PATH tauri build",
-    "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "tauri:build": "PATH=/Users/bytedance/.cargo/bin:$PATH tauri build"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.1",
+    "@xyflow/react": "^12.11.2",
+    "lucide-react": "^1.24.0",
     "next": "^15.3.4",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.61.1",
     "@tauri-apps/cli": "^2.11.3",
     "@types/node": "^22.15.30",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
     "typescript": "^5.8.3",
-    "vite": "^8.1.0"
+    "typescript-eslint": "^8.63.0",
+    "vite": "^8.1.0",
+    "vitest": "^4.1.10"
   }
 }

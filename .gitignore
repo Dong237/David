@@ -4,6 +4,9 @@ node_modules/
 out/
 dist/
 dist-desktop/
+coverage/
+playwright-report/
+test-results/
 .vercel/
 .playwright-mcp/
 .claude/
@@ -21,6 +24,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 
 # Generated local screenshots and visual iteration debris.
 /*.png

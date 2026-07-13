@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://david.local/schemas/v1/shared_contract_vocabulary.schema.json",
+  "x-version": "1.0.0",
+  "title": "David Mode B Shared Contract Vocabulary",
+  "description": "Versioned cross-Skill vocabulary for research schemas. These definitions separate epistemic state, evidence basis, lifecycle, confidence, validation severity, autonomy decision, and execution permission.",
+  "$defs": {
+    "KnowledgeStatus": {
+      "type": "string",
+      "enum": ["confirmed", "inferred", "unknown", "conflicting"]
+    },
+    "BasisType": {
+      "type": "string",
+      "enum": ["user_input", "source_evidence", "pattern", "model_inference", "synthetic_evaluation"]
+    },
+    "LifecycleStatus": {
+      "type": "string",
+      "enum": ["active", "rejected", "locked", "stale", "superseded"]
+    },
+    "Confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "ProvenanceCore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["knowledgeStatus", "basisType", "lifecycleStatus", "sourceIds"],
+      "properties": {
+        "knowledgeStatus": { "$ref": "#/$defs/KnowledgeStatus" },
+        "basisType": { "$ref": "#/$defs/BasisType" },
+        "lifecycleStatus": { "$ref": "#/$defs/LifecycleStatus" },
+        "sourceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "Severity": {
+      "type": "string",
+      "enum": ["Blocker", "Warning", "Recommendation"]
+    },
+    "AutonomyDecision": {
+      "type": "string",
+      "enum": [
+        "AUTO_APPLY",
+        "APPLY_WITH_UNDO",
+        "PROPOSE_FOR_APPROVAL",
+        "ASK_USER",
+        "DEFER_AS_ASSUMPTION",
+        "RESEARCH_OR_TEST"
+      ]
+    },
+    "ExecutionPermission": {
+      "type": "string",
+      "enum": ["automatic", "approval_required", "manual_only", "prohibited"]
+    }
+  }
+}

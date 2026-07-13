@@ -6,172 +6,141 @@
   <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
-David is a desktop-first product blueprint generator for AI indie builders.
+David is a constraint-aware product blueprint canvas for AI indie builders.
 
-It turns a fuzzy product Bet into a structured blueprint:
+It turns a fuzzy product Bet into one executable product model:
 
 ```text
 Bet -> IA -> Flow -> Low-fi Wireframe -> Scope -> Handoff
 ```
 
-The product is now in **David Mode B**. Older AI PM Doctor / diagnosis / evidence-validation files are legacy context only.
+David is currently a **desktop-first web app**. The verified showcase runs in Vite;
+the Tauri shell is optional packaging infrastructure, not the primary MVP runtime.
 
-## Current Product Truth
+## What The Product Is
 
-The source of truth lives in:
+David is the blueprint layer before Cursor, Codex, Claude Code, Lovable, and other
+coding agents. It helps a builder decide what product structure should exist before
+asking an agent to implement it.
 
-```text
-docs/david-mode-b/
-  david_mode_b_batch6_final_absorb_plan.md
-  david_mode_b_batch5_absorb_plan.md
-  david_mode_b_batch2_absorb_plan.md
-  david_mode_b_batch3_absorb_plan.md
-  david_mode_b_batch4_absorb_plan.md
-  david_mode_b_batch1_absorb_plan.md
-```
+The core UI is a **Unified Spatial Blueprint Canvas**:
 
-Priority order:
+- IA is the stable base graph.
+- Flow is an overlay on canonical IA node IDs.
+- Wireframes expand inside the selected node.
+- Scope changes are projected as reviewable diffs.
+- Constraints create visible blockers and repair choices.
+- Handoff files compile from the accepted Blueprint snapshot.
 
-1. Batch 6 final product definition
-2. Batch 5 implementation and critic plan
-3. Batch 2 technical architecture, data model, and AI pipeline
-4. Batch 3 scope and handoff
-5. Batch 4 visual and demo direction
-6. Batch 1 positioning, user, and market
+Chat is an agentic intake helper, not the primary interface. David is not a PRD bot,
+chat-first PM, whiteboard, sitemap tool, flowchart editor, high-fidelity UI generator,
+no-code builder, or coding agent.
 
-If any legacy file conflicts with these Mode B documents, the Mode B documents win.
+## Current Showcase
 
-## Product Positioning
+The deterministic AI Study Coach case proves the complete walking skeleton:
 
-David Mode B is not a chat-first AI PM, generic dashboard, PRD bot, whiteboard, no-code builder, UI generator, or coding agent.
+1. Submit a fuzzy product idea.
+2. Answer one decision-changing question.
+3. Generate one canonical Blueprint with 4 regions and 9 nodes.
+4. Toggle Flow without moving or duplicating IA nodes.
+5. Expand Daily Session into a low-fi Wireframe inside the same graph.
+6. Propose moving Diagnostic Quiz to Later.
+7. Inspect the resulting broken path and one root blocker.
+8. Apply a lightweight three-question diagnostic repair.
+9. Open an 11-file, snapshot-derived Handoff package.
+10. Reset and repeat deterministically.
 
-It is the blueprint layer before AI coding tools.
+The showcase is verified at 1440x900 and 1280x720 with Playwright, including five
+complete reset cycles, runtime error collection, and page-overflow gates.
 
-| User problem | David's job |
-|---|---|
-| "I have a product idea but do not know how to structure the first version." | Normalize the Bet and generate an IA / flow / wireframe structure. |
-| "I do not know what pages, states, and user paths the MVP needs." | Turn the Bet into a canvas of pages, flows, states, and node details. |
-| "AI coding tools drift because my prompt is vague." | Compile the blueprint into Markdown, JSON, and agent-specific handoff prompts. |
-| "I keep building too much." | Mark In MVP / Later / Excluded, no-gos, rabbit holes, dependencies, and acceptance criteria. |
+## Source Of Truth
 
-## Core Experience
-
-The core UI is **Blueprint Canvas**.
-
-Chat may exist as an input/helper, but it is not the main interface.
-
-```mermaid
-flowchart LR
-  A["Fuzzy Bet"] --> B["Bet Brief"]
-  B --> C["IA Nodes"]
-  C --> D["Flow Edges"]
-  D --> E["Low-fi Wireframes"]
-  E --> F["Scope Cut"]
-  F --> G["Handoff Package"]
-  G --> H["Cursor / Codex / Claude Code / Lovable / Bolt / v0"]
-```
-
-## MVP Walking Skeleton
-
-Build only the smallest product loop:
-
-1. Bet Intake
-2. Blueprint Canvas
-3. Node Detail
-4. Low-fi Wireframe Preview
-5. Scope Cut / Scope Sheet
-6. Handoff Export
-7. Basic Blueprint Validator
-
-Implementation order:
-
-1. Contract first: TypeScript domain types, Zod schemas, mock `BlueprintDocument`
-2. Workspace shell: left sidebar, top bar, canvas, right inspector, optional bottom dock
-3. Blueprint Canvas: React Flow renderer, custom nodes/edges, layer toggles
-4. Node Detail: why exists, user task, CTA, inputs, outputs, states, scope, acceptance criteria
-5. Wireframe Preview: deterministic JSON block renderer, low-fi only
-6. Scope: In MVP / Later / Excluded, no-gos, rabbit holes, dependencies, AC coverage
-7. Handoff: Markdown, JSON, and agent-specific prompts
-8. Validator: completeness, flow validity, wireframe coverage, handoff sufficiency
-
-## Visual Direction
-
-Use **Quiet Blueprint**:
-
-- desktop-first
-- canvas-first
-- clean, minimal, precise
-- light-first
-- neutral canvas
-- semantic accents only
-- 2.5D only through stacked cards, subtle shadow, z-index, and selected-node lift
-
-Avoid flashy AI gradients, glassmorphism, dashboard KPI walls, true 3D, and high-fidelity design generation.
-
-## Current Repository State
-
-This branch is mid-pivot cleanup.
-
-Current truth:
-
-- `docs/david-mode-b/` defines the new Mode B product.
-- `docs/legacy-before-pivot/` archives old Mode A specs, research, and design notes.
-- The active app surface has been reduced to a Mode B pivot shell. Legacy Mode A runtime code was removed from the default web and desktop entry points.
-- The next implementation should rebuild from contracts and fixtures rather than refactor the old diagnosis components.
-
-Useful infrastructure already exists:
-
-- Next.js App Router
-- TypeScript strict mode
-- Tauri desktop shell
-- Vite desktop entry
-- localStorage/Tauri service pattern
-
-Missing for Mode B implementation:
-
-- Zod contracts
-- `BlueprintDocument` fixture
-- React Flow canvas
-- Zustand workspace store
-- deterministic wireframe renderer
-- scope sheet
-- handoff exporter
-- blueprint validator
-
-## Repository Structure
+Read these documents in order:
 
 ```text
-app/                     Current Next.js Mode B pivot shell
-desktop/                 Vite desktop entry for Tauri
-src-tauri/               Tauri desktop shell
-docs/
-  david-mode-b/          Current product truth
-  legacy-before-pivot/   Archived pre-pivot context
-assets/                  Legacy visual assets
+docs/product/david-mode-b/
+  00_david_mode_b_positioning_and_principles.md
+  01_ia_reasoning_and_agent_autonomy_contract.md
+  02A_canvas_decision_brief.md
+  02B_unified_canvas_case_validation.md
+  david_unified_spatial_blueprint_canvas_ia_v2.md
+  demo/
 ```
+
+The executable feature contract lives in:
+
+```text
+specs/001-david-demo-showcase/
+```
+
+Legacy Mode A and pre-pivot material under `docs/legacy-before-pivot/` is historical
+context only.
+
+## Architecture Invariants
+
+`BlueprintDocument` is the canonical source of truth.
+
+- React Flow nodes and edges are render projections only.
+- IA, Flow, Wireframe, Scope, validation, and Handoff share canonical IDs.
+- Pending changes remain separate `ChangeSet` projections until approval.
+- Readiness derives from validator output; it is never manually toggled.
+- Handoff exports compile from the current Blueprint snapshot, not freeform prose.
+- LLM inference is not required for the deterministic reference showcase.
+
+## Stack
+
+- React 19 + TypeScript
+- Vite
+- React Flow
+- Zod
+- Vitest
+- Playwright
+- Optional Tauri wrapper
 
 ## Development
 
-Prerequisites:
-
-- Node.js 20+ recommended
-- npm 10+
-- Rust toolchain for Tauri desktop builds
+Use Node.js 24 (`.nvmrc`) or another version allowed by `package.json#engines`.
 
 ```bash
 npm install
 npm run dev
-npm run typecheck
-npm run build
-npm run desktop:dev-ui
-npm run tauri:dev
 ```
 
-The local web dev server defaults to [http://localhost:3000](http://localhost:3000).
-The desktop dev UI defaults to [http://127.0.0.1:1420](http://127.0.0.1:1420).
+Open [http://127.0.0.1:1420](http://127.0.0.1:1420).
 
-## Working Rule
+Quality gates:
 
-`BlueprintDocument` must become the source of truth.
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run build
+npm run test:e2e
+```
 
-React Flow nodes/edges are only render projections. Handoff exports must compile from the blueprint snapshot, not from freeform LLM prose.
+## Repository Map
+
+```text
+desktop/src/
+  app/          deterministic demo state and transitions
+  components/   intake, unified Canvas, inspector, decisions, Handoff
+  domain/       canonical types, Zod schema, validation, readiness, export
+  fixtures/     AI Study Coach reference Blueprint
+  styles/       Quiet Blueprint tokens and responsive layout
+tests/
+  unit/         domain and reducer contracts
+  e2e/          complete dual-viewport interaction journeys
+specs/          executable Spec Kit feature artifacts
+artifacts/demo-showcase/
+                screenshots, test evidence, and final acceptance records
+docs/product/david-mode-b/
+                product and interaction source documents
+src-tauri/      optional desktop packaging shell
+```
+
+## MVP Boundary
+
+The current MVP deliberately excludes backend services, auth, collaboration, a live
+LLM, persistence, WebGL, freeform wireframe editing, high-fidelity UI generation,
+automatic code generation, and production export integrations.
